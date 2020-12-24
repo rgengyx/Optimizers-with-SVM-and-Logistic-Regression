@@ -1,7 +1,7 @@
 function [x, ks, ngs, norms] = newton_method(f,x0,opts)
 
 % import
-addpath(genpath('lib'));
+addpath(genpath('search'));
 
 x = x0;
 k = 0;

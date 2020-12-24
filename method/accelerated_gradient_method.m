@@ -1,7 +1,7 @@
 function [x,ks,ngs] = accelerated_gradient_method(f,x0,opts)
 
 % import
-addpath(genpath('lib'));
+addpath(genpath('search'));
 
 x = x0;
 prev_x = x0;
