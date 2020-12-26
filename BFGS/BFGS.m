@@ -1,8 +1,8 @@
-function x_end = BFGS(f,x0,opts)
+function [x_end,count] = BFGS(f,x0,opts)
 %BFGS 此处显示有关此函数的摘要
 %   此处显示详细说明
 addpath('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\project\project_git\MDS6106_Project\search')
-addpath('functions_test\')
+%addpath('functions_test\')
 %hyperparameter setting
 %just use the opts
 count = 0;
