@@ -10,6 +10,8 @@ p2.c = [1,1]';p2.sigma = 0.5;p2.m = 300;
 %data save
 save('small_dataset_mod','data1','label1')
 
+load("small/small_dataset_mod.mat");
+
 %visual the points(little slow as use for loop)
 l = size(label1);
 l = l(2);
@@ -22,4 +24,3 @@ parfor i = 1:l
         hold on;
     end
 end
->>>>>>> 5b2c7d94d4b6bf074b5fa94acdb05915864ad2b3

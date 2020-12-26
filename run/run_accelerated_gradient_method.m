@@ -1,6 +1,6 @@
 % Add folder to path
-addpath(genpath('../method'));
-addpath(genpath('../function'));
+addpath(genpath('method'));
+addpath(genpath('function'));
 
 
 % Global Seed Settings
