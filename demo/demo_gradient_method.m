@@ -28,6 +28,7 @@ opts.armijo.maxit = 100;
 opts.armijo.s = 1;
 opts.armijo.sigma = 0.5;
 opts.armijo.gamma = 0.1;
+
 % Diminishing
 opts.diminishing.p = 2;
 
