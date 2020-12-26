@@ -27,6 +27,7 @@ for k = 1:opts.agm.maxit
     
     if opts.agm.print
         fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; beta=%1.2f\n',k,obj_val,ng,alpha,beta);
+        x
     end
     
     % Check if stopping criteria is satisfied

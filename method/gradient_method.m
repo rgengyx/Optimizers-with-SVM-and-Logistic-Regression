@@ -47,7 +47,8 @@ for k = 1:opts.gm.maxit
     
     if opts.gm.print
         obj_val   = f.obj(x,opts);
-        fprintf(1,'[%5i] ; %1.6f ; %1.4e ; %1.2f\n',k,obj_val,ng,alpha);
+        fprintf(1,'[%5i] ; %1.6f ; %1.6e ; %1.2f\n',k,obj_val,ng,alpha);
+        x
     end
     
     if ng <= opts.gm.tol

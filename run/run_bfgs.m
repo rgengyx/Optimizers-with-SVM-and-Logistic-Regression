@@ -14,19 +14,17 @@ load("small/small_dataset_sample.mat");
 % Method Options %
 %%%%%%%%%%%%%%%%%%%
 
-% GM
-opts.gm.maxit = 100;
-opts.gm.tol = 1e-8;
-opts.gm.display = true;
-opts.gm.step_size_method = "armijo";
-opts.gm.plot = false;
-opts.gm.print = true;
+% BFGS
+opts.bfgs.epsilon = 1e-6;
+opts.bfgs.H_epsilon = 1e-14;
+opts.bfgs.rou = 1;
+opts.bfgs.maxit = 400;
 
 % Armijo
-opts.armijo.maxit = 100;
 opts.armijo.s = 1;
 opts.armijo.sigma = 0.5;
 opts.armijo.gamma = 0.1;
+
 
 % Sample
 opts.sample.m = length(data1);
@@ -49,10 +47,11 @@ opts.logr.lambda = 0.1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % f = svm();
-f = logistic_regression();
+% f = logistic_regression();
+f = bfgs();
 
 x0 = [0;0;0];
-[x,ks,ngs] = gradient_method(f,x0,opts);
+[x,ks,ngs] = bfgs(f,x0,opts);
 
 
 %%%%%%%%%%%%%%%%%
