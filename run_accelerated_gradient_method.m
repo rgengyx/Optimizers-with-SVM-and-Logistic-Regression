@@ -1,6 +1,6 @@
 % Add folder to path
-addpath(genpath('method'));
-addpath(genpath('function'));
+addpath(genpath('..\method'));
+addpath(genpath('..\function'));
 
 
 % Global Seed Settings
@@ -9,7 +9,7 @@ rng("default");
 %%%%%%%%%%%%%
 % Load data %
 %%%%%%%%%%%%%
-
+global data1;global label1;
 load("small\small_dataset_sample.mat");
 
 
@@ -24,7 +24,7 @@ opts.gm.display = true;
 opts.gm.plot = false;
 opts.agm.print = true;
 opts.agm.beta = @beta;
-opts.agm.L = 0.1;
+opts.agm.L = 2;
 opts.agm.step_size = step_size(opts);
 
 
@@ -43,8 +43,8 @@ opts.logr.lambda = 0.1;
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-f = svm();
-% f = logistic_regression();
+%f = svm();
+f = logistic_regression();
 
 x0 = [0;0;0];
 [x,ks,ngs] = accelerated_gradient_method(f,x0,opts);
