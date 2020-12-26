@@ -11,7 +11,7 @@ rng("default");
 % Load data %
 %%%%%%%%%%%%%
 global data1;global label1;
-load("small\small_dataset_mod.mat");
+load("small/small_dataset_mod.mat");
 train_ratio = 0.8;len_data = length(data1);
 rand_index = randperm(len_data,len_data);
 train_index = rand_index(1:floor(len_data * train_ratio));

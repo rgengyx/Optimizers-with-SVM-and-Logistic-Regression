@@ -11,7 +11,7 @@ rng("default");
 % Load data %
 %%%%%%%%%%%%%
 global data1;global label1;
-load("small\small_dataset_sample.mat");
+load("small/small_dataset_sample.mat");
 train_ratio = 0.8;len_data = length(data1);
 rand_index = randperm(len_data,len_data);
 train_index = rand_index(1:floor(len_data * train_ratio));
@@ -26,7 +26,7 @@ data1 = data1(:,train_index);label1 = label1(train_index);
 %%%%%%%%%%%%%%%%%%%
 
 % AGM
-opts.agm.maxit = 1000;
+opts.agm.maxit = 3000;
 opts.agm.tol = 1e-4;
 opts.gm.display = true;
 opts.gm.plot = false;
@@ -43,6 +43,9 @@ opts.svm.delta = 1e-1;
 
 % Logistic Regression
 opts.logr.lambda = 0.1;
+
+% Sample
+opts.sample.m = length(data1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %

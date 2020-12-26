@@ -24,6 +24,8 @@ opts.gm.display = true;
 opts.gm.plot = false;
 opts.agm.print = true;
 
+% Sample
+opts.sample.m = length(data1);
 
 %%%%%%%%%%%%%%%%%%%%%%
 % Parameters Options %
