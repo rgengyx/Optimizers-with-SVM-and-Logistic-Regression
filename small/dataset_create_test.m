@@ -8,4 +8,18 @@ p2.c = [1,1]';p2.sigma = 0.5;p2.m = 300;
 [data1,label1] = create_2points_dataset(p1,p2);
 
 %data save
-save('small_dataset','data1','label1')
+save('small_dataset_mod','data1','label1')
+
+%visual the points(little slow as use for loop)
+l = size(label1);
+l = l(2);
+parfor i = 1:l
+    if label1(i) == 1
+        scatter(data1(1,i),data1(2,i),'r*');
+        hold on;
+    else
+        scatter(data1(1,i),data1(2,i),'b*');
+        hold on;
+    end
+end
+>>>>>>> 5b2c7d94d4b6bf074b5fa94acdb05915864ad2b3
