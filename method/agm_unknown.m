@@ -12,7 +12,6 @@ prev_alpha = 0.1;
 eta = 0.5;
 
 for k = 1:opts.agm.maxit
-    
     beta = t^(-1) * (prev_t - 1);
     y = x + beta * (x - prev_x);
     prev_x = x;
@@ -24,7 +23,11 @@ for k = 1:opts.agm.maxit
         alpha = eta * alpha;
         x = y - alpha * grad;
     end
-    t = (1/2)*(1 + sqrt(1+4*prev_t^2));
+    
+    t_next = (1/2)*(1 + sqrt(1+4*t^2));
+    prev_t = t;
+    t = t_next;
+    
     prev_alpha = alpha;
 
     obj_val = f.obj(x,opts);

@@ -11,6 +11,7 @@ k = 0;
 
 for k = 1:opts.agm.maxit
 
+    
     [prev_t, beta] = opts.agm.beta(prev_t);
     alpha = opts.agm.step_size;
     y = x + beta * (x - prev_x);

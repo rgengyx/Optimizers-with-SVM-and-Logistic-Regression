@@ -5,7 +5,7 @@ addpath('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\pro
 %addpath('functions_test\')
 %hyperparameter setting
 %just use the opts
-limit_step = opts.limit.step;
+limit_step = opts.limit_step;
 
 count = 0;
 x_now = x0;
