@@ -5,43 +5,59 @@ addpath('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\pro
 addpath('functions_test\')
 %hyperparameter setting
 %just use the opts
-count = 0;
+limit_step = 5;
 
-%build H0 with the dimension of x0
-n = size(x0);n = n(1);
-H_now = eye(n) * opts.rou;
-df = f.grad;
-%set initial x_now
+count = 0;
 x_now = x0;
 
+s_buffer = {};y_buffer = {};alpha_buffer = {};
 while(count < opts.maxit)
-    d_now = -H_now * df(x_now);
+    %mimit the two-recursion loop, modify it with the former m steps
+    %when enter a loop, x_now is known, former m steps buffer is known
+    q = f.grad(x_now);
+    %recursion 1
+    buffer_end = min(count,limit_step);
+    if buffer_end == 0 %the first step
+        H0_now_const = 1;
+    else
+        H0_now_const = (s_buffer{buffer_end}' * y_buffer{buffer_end}) / (y_buffer{buffer_end}' * y_buffer{buffer_end});
+    end
+    
+    for i = 1:buffer_end
+        i_new = buffer_end + 1 - i;%do the up-side down
+        rou_now = 1 / (s_buffer{i_new}' * y_buffer{i_new});
+        alpha_buffer{i_new} = rou_now * s_buffer{i_new}' * q;%store the alpha
+        q = q - alpha_buffer{i_new} * y_buffer{i_new};
+    end
+    %set r for recursion mid
+    r = H0_now_const * q;
+    %recursion 2
+    for i = 1:buffer_end
+        rou_now = 1 / (s_buffer{i}' * y_buffer{i});
+        beta_now = rou_now * y_buffer{i}' * r;
+        r = r + (alpha_buffer{i} - beta_now) * s_buffer{i};
+    end
+    %calculate the x_next
+    d_now = r;
     alpha = armijo_line_search(f,x_now,d_now,opts);
     x_next = x_now + alpha * d_now;
-
-    if(df(x_next) <= opts.epsilon)
-        break;
-    end
-    
-    %build sk and yk
-    s_now = x_next - x_now;y_now = df(x_next) - df(x_now);
-    
-    %Hk+1 setting
-    if(s_now' * y_now < 0)%not good Hk+1, hold original
-        H_next = H_now;
+    %renew the buffer storage
+    if buffer_end < limit_step
+        buffer_end = buffer_end + 1;
+        s_buffer{buffer_end} = x_next - x_now
+        y_buffer{buffer_end} = f.grad(x_next) - f.grad(x_now);
     else
-        add1 = ((s_now - H_now * y_now) * s_now' + s_now * (s_now - H_now * y_now)') / (s_now' * y_now);
-        add2 = (s_now - H_now * y_now)' * y_now * (s_now * s_now') / (s_now' * y_now)^2;
-               
-        H_next = H_now + add1 - add2;
+        for i = 1:buffer_end - 1
+            s_buffer{i} = s_buffer{i + 1};
+            y_buffer{i} = y_buffer{i + 1};
+        end
+        s_buffer{buffer_end} = x_next - x_now;
+        y_buffer{buffer_end} = f.grad(x_next) - f.grad(x_now);
     end
-    
-    %renew the x_now and H_now
+    %renew the x_now
     x_now = x_next;
-    H_now = H_next;
     count = count + 1;
 end
-
 x_end = x_now;
 end
 
