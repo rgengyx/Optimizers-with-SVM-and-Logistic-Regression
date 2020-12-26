@@ -3,12 +3,12 @@ addpath(genpath('method'));
 addpath(genpath('function'));
 addpath(genpath('visualization'));
 
+
 %%%%%%%%%%%%%
 % Load data %
 %%%%%%%%%%%%%
-
+global data1;global label1;
 load("small/small_dataset_mod.mat");
-% load("small/small_dataset_sample.mat");
 
 
 %%%%%%%%%%%%%%%%%%%
@@ -16,8 +16,8 @@ load("small/small_dataset_mod.mat");
 %%%%%%%%%%%%%%%%%%%
 
 % GM
-opts.gm.maxit = 20;
-opts.gm.tol = 1e-8;
+opts.gm.maxit = 100;
+opts.gm.tol = 1e-4;
 opts.gm.display = true;
 opts.gm.step_size_method = "armijo";
 opts.gm.plot = false;
@@ -38,7 +38,8 @@ opts.sample.m = length(data1);
 %%%%%%%%%%%%%%%%%%%%%%
 
 % SVM
-opts.svm.lambda = 0;
+opts.svm.lambda = 1/opts.sample.m;
+
 opts.svm.delta = 1e-4;
 
 % Logistic Regression
@@ -48,9 +49,8 @@ opts.logr.lambda = 0.1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-f = svm();
-% f = logistic_regression();
+%f = svm();
+f = logistic_regression();
 
 x0 = [0;0;0];
 [x,ks,ngs] = gradient_method(f,x0,opts);
