@@ -8,7 +8,7 @@ p2.c = [1,1]';p2.sigma = 0.5;p2.m = 300;
 [data1,label1] = create_2points_dataset(p1,p2);
 
 %data save
-save('small_dataset','data1','label1')
+save('small_dataset_mod','data1','label1')
 
 
 %visual the points(little slow as use for loop)
