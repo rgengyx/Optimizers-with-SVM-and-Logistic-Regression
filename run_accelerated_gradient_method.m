@@ -1,12 +1,15 @@
 % Add folder to path
-addpath(genpath('method'));
-addpath(genpath('function'));
-addpath(genpath('visualization'));
+addpath(genpath('..\method'));
+addpath(genpath('..\function'));
+
+
+% Global Seed Settings
+rng("default");
 
 %%%%%%%%%%%%%
 % Load data %
 %%%%%%%%%%%%%
-
+global data1;global label1;
 load("small\small_dataset_sample.mat");
 
 
@@ -14,22 +17,15 @@ load("small\small_dataset_sample.mat");
 % Method Options %
 %%%%%%%%%%%%%%%%%%%
 
-% GM
-opts.gm.maxit = 100;
-opts.gm.tol = 1e-8;
+% AGM
+opts.agm.maxit = 1000;
+opts.agm.tol = 1e-4;
 opts.gm.display = true;
-opts.gm.step_size_method = "armijo";
 opts.gm.plot = false;
-opts.gm.print = true;
-
-% Armijo
-opts.armijo.maxit = 100;
-opts.armijo.s = 1;
-opts.armijo.sigma = 0.5;
-opts.armijo.gamma = 0.1;
-
-% Sample
-opts.sample.m = length(data1);
+opts.agm.print = true;
+opts.agm.beta = @beta;
+opts.agm.L = 2;
+opts.agm.step_size = step_size(opts);
 
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -37,22 +33,21 @@ opts.sample.m = length(data1);
 %%%%%%%%%%%%%%%%%%%%%%
 
 % SVM
-opts.svm.lambda = 1/opts.sample.m;
-opts.svm.delta = 1e-4;
+opts.svm.lambda = 0.1;
+opts.svm.delta = 1e-1;
 
 % Logistic Regression
 opts.logr.lambda = 0.1;
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% f = svm();
+%f = svm();
 f = logistic_regression();
 
 x0 = [0;0;0];
-[x,ks,ngs] = gradient_method(f,x0,opts);
+[x,ks,ngs] = accelerated_gradient_method(f,x0,opts);
 
 
 %%%%%%%%%%%%%%%%%
@@ -76,3 +71,20 @@ function x2 = calculate_x2(x, x1)
     x2 = (-x1 * x(1) - x(3))/x(2); 
 end
 
+
+%%%%%%%%%%%%%%%%%%%%%
+% Utility Functions %
+%%%%%%%%%%%%%%%%%%%%%
+
+% Define Extrapolation parameter beta
+function [prev_t, beta1] = beta(prev_t)
+    t = (1/2)*(1 + sqrt(1+4*prev_t^2));
+    beta1 = (prev_t - 1) / t;
+    prev_t = t;
+end
+
+% Step size
+function step_size1 = step_size(opts)
+    L = opts.agm.L;
+    step_size1 = 1 / L;
+end

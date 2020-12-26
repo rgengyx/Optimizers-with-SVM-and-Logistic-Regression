@@ -1,6 +1,6 @@
 % Add folder to path
-addpath(genpath('../method'));
-addpath(genpath('../function'));
+addpath(genpath('..\method'));
+addpath(genpath('..\function'));
 
 
 % Global Seed Settings
@@ -10,7 +10,7 @@ rng("default");
 % Load data %
 %%%%%%%%%%%%%
 
-load("small/small_dataset_sample.mat");
+load("small\small_dataset_sample.mat");
 
 
 %%%%%%%%%%%%%%%%%%%
@@ -77,14 +77,14 @@ end
 %%%%%%%%%%%%%%%%%%%%%
 
 % Define Extrapolation parameter beta
-function [prev_t, beta] = beta(prev_t)
+function [prev_t, beta1] = beta(prev_t)
     t = (1/2)*(1 + sqrt(1+4*prev_t^2));
-    beta = (prev_t - 1) / t;
+    beta1 = (prev_t - 1) / t;
     prev_t = t;
 end
 
 % Step size
-function step_size = step_size(opts)
+function step_size1 = step_size(opts)
     L = opts.agm.L;
-    step_size = 1 / L;
+    step_size1 = 1 / L;
 end
