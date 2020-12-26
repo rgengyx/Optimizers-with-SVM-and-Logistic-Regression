@@ -14,6 +14,21 @@ opts.agm.maxit = 20000;
 opts.agm.tol = 1e-4;
 opts.agm.print = true;
 
+opts.agm.mu = mu;
+opts.agm.A = A;
+opts.agm.b = b;
+opts.agm.delta = delta;
+opts.agm.nu = nu;
+opts.agm.beta = @beta;
+opts.agm.L1 = L1;
+opts.agm.L2 = L2;
+
+% Line Search for Unknown Lipschitz Constant
+opts.ls.beta = 0.8;
+opts.ls.l = 0.8;
+
+x0 = zeros(n,1);
+
 
 %%%%%%%%%%%%%%%%%%%%
 % Define Variables %
@@ -36,26 +51,12 @@ b=A*x_star+ 0.01*randn(m,1);
 L1 = 2 * mu + norm(A'*A);
 L2 = mu * 1/delta + norm(A'*A);
 
-%%%%%%%%%%%%%%%%%%%
-% Declare Options %
-%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%
+% Declare f %
+%%%%%%%%%%%%%
 
 f.obj = @obj;
 f.grad = @grad;
-opts.agm.mu = mu;
-opts.agm.A = A;
-opts.agm.b = b;
-opts.agm.delta = delta;
-opts.agm.nu = nu;
-opts.agm.beta = @beta;
-opts.agm.L1 = L1;
-opts.agm.L2 = L2;
-
-% Line Search for Unknown Lipschitz Constant
-opts.ls.beta = 0.8;
-opts.ls.l = 0.8;
-
-x0 = zeros(n,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %

@@ -12,8 +12,8 @@ norms = [];
 
 for k = 1:opts.gm.maxit
     
-    % Calculate Gradient 
-    d = -f.grad(x);
+    % Calculate Gradient
+    d = -f.grad(x,opts);
     
     % Calculate Alpha 
     if strcmp(opts.gm.step_size_method, "exact")
@@ -35,7 +35,7 @@ for k = 1:opts.gm.maxit
     end
     
     % Calculate Gradient 
-    grad = f.grad(x);
+    grad = f.grad(x,opts);
     
     % Check if stopping crkia is satisfied
     ng = norm(grad);
@@ -43,10 +43,10 @@ for k = 1:opts.gm.maxit
     % Add new element to arrays
     ks(k) = k;
     ngs(k) = ng;
-    norms(k) = norm(x - [1;1]);
+%     norms(k) = norm(x - [1;1]);
     
     if opts.gm.print
-        obj_val   = f.obj(x);
+        obj_val   = f.obj(x,opts);
         fprintf(1,'[%5i] ; %1.6f ; %1.4e ; %1.2f\n',k,obj_val,ng,alpha);
     end
     
