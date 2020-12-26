@@ -31,7 +31,9 @@ opts.agm.tol = 1e-4;
 opts.gm.display = true;
 opts.gm.plot = false;
 opts.agm.print = true;
-
+opts.agm.beta = @beta;
+opts.agm.L = 2;
+opts.agm.step_size = step_size(opts);
 
 %%%%%%%%%%%%%%%%%%%%%%
 % Parameters Options %
@@ -55,8 +57,8 @@ opts.sample.m = length(data1);
 f = logistic_regression();
 
 x0 = [0;0;0];
-[x,ks,ngs] = accelerated_gradient_method(f,x0,opts);
-
+% [x,ks,ngs] = agm_unknown(f,x0,opts);
+[x,ks,ngs] = agm_known(f,x0,opts);
 
 %%%%%%%%%%%%%%%%%
 %     test      %
@@ -89,4 +91,21 @@ plot(x1,x2);
 
 function x2 = calculate_x2(x, x1)
     x2 = (-x1 * x(1) - x(3))/x(2); 
+end
+
+%%%%%%%%%%%%%%%%%%%%%
+% Utility Functions %
+%%%%%%%%%%%%%%%%%%%%%
+
+% Define Extrapolation parameter beta
+function [prev_t, beta1] = beta(prev_t)
+    t = (1/2)*(1 + sqrt(1+4*prev_t^2));
+    beta1 = (prev_t - 1) / t;
+    prev_t = t;
+end
+
+% Step size
+function step_size1 = step_size(opts)
+    L = opts.agm.L;
+    step_size1 = 1 / L;
 end

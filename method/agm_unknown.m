@@ -1,4 +1,4 @@
-function [x,ks,ngs] = accelerated_gradient_method(f,x0,opts)
+function [x,ks,ngs] = agm_unknown(f,x0,opts)
 
 % import
 addpath(genpath('search'));
