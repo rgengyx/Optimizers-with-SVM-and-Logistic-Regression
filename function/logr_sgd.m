@@ -1,4 +1,4 @@
-function f = logistic_regression_sgd()
+function f = logr_sgd()
 
     %%%%%%%%%%%%%%%%%%%%
     % Function Options %
@@ -52,7 +52,8 @@ function f = logistic_regression_sgd()
         m = opts.sample.m;
         penalty = 0;
         summation = 0;
-        for i=1:m
+        rand_index = randperm(m,floor(m * opts.sgd_ratio)); %random choose gradient direction here
+        for i = rand_index
             a = data(:,i);
             b = label(i);
             summand = (b*a*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
@@ -67,7 +68,8 @@ function f = logistic_regression_sgd()
         m = opts.sample.m;
         penalty = 0;
         summation = 0;
-        for i=1:m
+        rand_index = randperm(m,floor(m * opts.sgd_ratio));
+        for i = rand_index
             a = data(:,i);
             b = label(i);
             summand = (b*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
