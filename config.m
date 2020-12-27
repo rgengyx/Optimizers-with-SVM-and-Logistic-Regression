@@ -4,6 +4,9 @@ function opts = config(opts)
 % Method Parameters %
 %%%%%%%%%%%%%%%%%%%%%
 
+%sgd ratio
+opts.sgd_ratio = 1 / 1.2;
+
 % GM
 opts.gm.maxit = 3000;
 opts.gm.tol = 1e-4;
@@ -28,7 +31,7 @@ opts.agm.batch_epsilon = 1e-2;
 opts.bfgs.epsilon = 1e-8;
 opts.bfgs.H_epsilon = 1e-14;
 opts.bfgs.rou = 1;
-opts.bfgs.maxit = 200;
+opts.bfgs.maxit = 1000;
 opts.bfgs.batch_size = 200;
 opts.bfgs.batch_epsilon = 1e-2;
 

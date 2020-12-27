@@ -14,6 +14,8 @@ addpath(genpath('run'));
         [x,count,ngs] = run_bfgs(func,opts);
     elseif method == "bfgs_batch"
         [x,count,ngs] = run_bfgs_batch(func,opts);
+    elseif method == "bfgs_sgd"
+        [x,count,ngs] = run_bfgs(func + "_sgd",opts);%use the original bfgs, while change the function
     elseif method == "lbfgs"
         [x,count,ngs] = run_L_bfgs(func,opts);
     elseif method == "lbfgs_batch"
