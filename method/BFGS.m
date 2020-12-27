@@ -41,6 +41,7 @@ while(count < opts.bfgs.maxit)
     x_now = x_next;
     H_now = H_next;
     count = count + 1;
+        
 end
 
 x_end = x_now;

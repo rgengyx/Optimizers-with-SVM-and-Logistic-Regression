@@ -1,4 +1,4 @@
-function [x,ks,ngs] = agm_known(f,x0,opts)
+function [x,k,ngs] = agm_known(f,x0,opts)
 
 % import
 addpath(genpath('search'));
