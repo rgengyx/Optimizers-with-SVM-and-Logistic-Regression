@@ -20,7 +20,15 @@ opts.agm.step_size = step_size(opts);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f = func();
+if func == "svm"
+    f = svm();
+elseif func == "svm_sparse"
+    f = svm_sparse();
+elseif func == "logr"
+    f = logr();
+elseif func == "logr_sparse"
+    f = logr_sparse();
+end
 
 x0 = opts.x0;
 [x,k,ngs] = agm_unknown(f,x0,opts);
