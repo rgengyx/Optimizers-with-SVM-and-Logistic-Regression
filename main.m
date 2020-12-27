@@ -1,5 +1,6 @@
 % Add folder to path
 addpath(genpath('method'));
+addpath(genpath('run'));
 addpath(genpath('function'));
 addpath(genpath('visualization'));
 addpath(genpath('search'));
@@ -23,7 +24,7 @@ opts = config(opts);
 % svm, logr
 % gm, agm, bfgs, lbfgs
 
-x = run("svm","gm",opts);
+x = run_model("svm","gm",opts);
 
 %%%%%%%%
 % test %

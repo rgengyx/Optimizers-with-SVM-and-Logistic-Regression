@@ -1,4 +1,4 @@
-function x = run(func, method, opts)
+function x = run_model(func, method, opts)
     
 % import
 addpath(genpath('run'));
