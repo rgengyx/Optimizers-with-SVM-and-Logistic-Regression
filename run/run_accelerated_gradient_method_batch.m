@@ -46,11 +46,7 @@ for i = 1:batch_count %do with the batch
     opts.agm.tol = opts.agm.batch_epsilon;
     
     %use new batch data to run new f
-    if func == "svm"
-        f = svm();
-    elseif func == "logr"
-        f = logistic_regression();
-    end
+    f = func();
     
     %use the former batch result for next train
     x0 = x;
