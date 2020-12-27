@@ -13,12 +13,7 @@ rng("default");
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-if func == "svm"
-    f = svm();
-elseif func == "logr"
-    f = logistic_regression();
-end
+f = func();
 
 x0 = opts.x0;
 [x,k,ngs] = gradient_method(f,x0,opts);

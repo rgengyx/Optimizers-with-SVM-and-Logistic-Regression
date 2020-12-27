@@ -1,4 +1,4 @@
-function f = logistic_regression()
+function f = logr()
 
     %%%%%%%%%%%%%%%%%%%%
     % Function Options %

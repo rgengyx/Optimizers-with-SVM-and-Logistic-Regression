@@ -11,8 +11,12 @@ addpath(genpath('run'));
 %%%%%%%%%%%%%
 % Load data %
 %%%%%%%%%%%%%
-global data1;global label1;global data2;global label2;
-load("small/small_dataset_larger.mat");
+global data1 label1 data2 label2;
+global A b;
+
+% load("small/small_dataset_sample.mat");
+load("bigdata/mushrooms/mushrooms_train.mat");
+load("bigdata/mushrooms/mushrooms_train_label.mat");
 
 % Sample
 sizes = size(data1);
@@ -35,7 +39,7 @@ method_cmp_list = {'gm','gm_batch'};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i}] = run(logr,method_cmp_list{i},opts);
     toc
 end
 
