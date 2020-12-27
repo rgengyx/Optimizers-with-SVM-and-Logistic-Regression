@@ -29,6 +29,9 @@ opts = config(opts);
 % Run %
 %%%%%%%
 
+% svm, logr
+% gm, agm, bfgs, lbfgs
+
 x = run("svm","gm",opts);
 
 %%%%%%%%
