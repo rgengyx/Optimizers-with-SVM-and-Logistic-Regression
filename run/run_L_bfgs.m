@@ -1,4 +1,4 @@
-function x = run_gradient_method(func, opts)
+function x = run_L_bfgs(func, opts)
 
 % Add folder to path
 addpath(genpath('method'));
@@ -21,6 +21,6 @@ elseif func == "logr"
 end
 
 x0 = [0;0;0];
-[x,ks,ngs] = gradient_method(f,x0,opts);
+[x,k] = L_BFGS(f,x0,opts);
 
 end

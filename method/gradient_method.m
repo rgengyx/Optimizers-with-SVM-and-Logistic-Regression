@@ -45,9 +45,10 @@ for k = 1:opts.gm.maxit
     ngs(k) = ng;
 %     norms(k) = norm(x - [1;1]);
     
-    if opts.gm.print
+    
+    if opts.agm.print
         obj_val   = f.obj(x,opts);
-        fprintf(1,'[%5i] ; %1.6f ; %1.6e ; %1.2f\n',k,obj_val,ng,alpha);
+        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',k,obj_val,ng,alpha);
         x
     end
     

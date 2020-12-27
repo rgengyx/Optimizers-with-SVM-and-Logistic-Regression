@@ -1,70 +1,51 @@
+function x = run_accelerated_gradient_method(func, opts)
+
 % Add folder to path
 addpath(genpath('method'));
 addpath(genpath('function'));
 addpath(genpath('visualization'));
-
+addpath(genpath('search'));
+addpath(genpath('test'));
 % Global Seed Settings
 rng("default");
-
-%%%%%%%%%%%%%
-% Load data %
-%%%%%%%%%%%%%
-global data1;global label1;
-load("small/small_dataset_mod.mat");
 
 
 %%%%%%%%%%%%%%%%%%%
 % Method Options %
 %%%%%%%%%%%%%%%%%%%
 
-% AGM
-opts.agm.maxit = 2000;
-opts.agm.tol = 1e-4;
-opts.gm.display = true;
-opts.gm.plot = false;
-opts.agm.print = true;
-
-% Sample
-opts.sample.m = length(data1);
-
-%%%%%%%%%%%%%%%%%%%%%%
-% Parameters Options %
-%%%%%%%%%%%%%%%%%%%%%%
-
-% SVM
-opts.svm.lambda = 0.1;
-opts.svm.delta = 1e-1;
-
-% Logistic Regression
-opts.logr.lambda = 0.1;
+opts.agm.beta = @beta;
+opts.agm.step_size = step_size(opts);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%f = svm();
-f = logistic_regression();
+if func == "svm"
+    f = svm();
+elseif func == "logr"
+    f = logistic_regression();
+end
 
 x0 = [0;0;0];
-[x,ks,ngs] = accelerated_gradient_method(f,x0,opts);
-
-
-%%%%%%%%%%%%%%%%%
-% Visualization %
-%%%%%%%%%%%%%%%%%
-
-plot_scatter(data1,label1);
-hold on
-
-x1 = -3:0.01:3;
-x2 = calculate_x2(x,x1);
-plot(x1,x2);
-
+[x,ks,ngs] = agm_unknown(f,x0,opts);
+%[x,ks,ngs] = agm_known(f,x0,opts);
 
 %%%%%%%%%%%%%%%%%%%%%
 % Utility Functions %
 %%%%%%%%%%%%%%%%%%%%%
 
-function x2 = calculate_x2(x, x1)
-    x2 = (-x1 * x(1) - x(3))/x(2); 
+% Define Extrapolation parameter beta
+function [prev_t, beta1] = beta(prev_t)
+    t = (1/2)*(1 + sqrt(1+4*prev_t^2));
+    beta1 = (prev_t - 1) / t;
+    prev_t = t;
+end
+
+% Step size
+function step_size1 = step_size(opts)
+    L = opts.agm.L;
+    step_size1 = 1 / L;
+end
+
 end
