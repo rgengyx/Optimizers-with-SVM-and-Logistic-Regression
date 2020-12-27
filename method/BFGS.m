@@ -45,7 +45,8 @@ while(count < opts.bfgs.maxit)
 
     if true
         obj_val   = f.obj(x_now,opts);
-        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',count,obj_val,df(x_now,opts),alpha);
+        ng = norm(df(x_now,opts));
+        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',count,obj_val, ng,alpha);
     end
     
 end
