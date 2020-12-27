@@ -28,7 +28,7 @@ opts.x0 = zeros(size(A,2) + 1, 1);
 % svm, logr
 % gm, agm, bfgs, lbfgs
 
-x = run(svm_sparse,"bfgs",opts);
+x = run(svm_sparse,"agm",opts);
 
 %%%%%%%%
 % test %
@@ -41,3 +41,4 @@ x = run(svm_sparse,"bfgs",opts);
 %%%%%%%%%%%%%
 
 % visualize(x, data2, label2);
+

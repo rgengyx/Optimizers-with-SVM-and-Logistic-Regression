@@ -36,7 +36,7 @@ method_cmp_list = {'gm','gm_batch'};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i}] = run(logistic_regression,method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i}] = run(logr,method_cmp_list{i},opts);
     toc
 end
 %%%%%%%%
