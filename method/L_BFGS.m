@@ -61,6 +61,12 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
         y_buffer{buffer_end} = f.grad(x_next,opts) - f.grad(x_now,opts);
     end
     
+    if true
+        obj_val   = f.obj(x_now,opts);
+        ng = norm(q);
+        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',count,obj_val, ng,alpha);
+    end
+    
     %renew the x_now
     x_now = x_next;
     count = count + 1;
