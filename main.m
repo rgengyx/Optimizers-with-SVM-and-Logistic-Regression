@@ -24,7 +24,10 @@ opts = config(opts);
 %%%%%%%
 
 % svm, logr
+% svm_sgd, logr_sgd
+
 % gm, agm, bfgs, lbfgs
+% gm_batch, agm_batch, bfgs_batch, lbfgs_batch
 
 %initial point set
 opts.x0 = [0,0,0]';
@@ -35,6 +38,7 @@ for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
     toc
 end
+
 %%%%%%%%
 % test %
 %%%%%%%%
