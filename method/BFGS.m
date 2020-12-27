@@ -16,6 +16,7 @@ x_now = x0;
 ngs = [];
 
 while(count < opts.bfgs.maxit)
+    %df(x_now,opts)
     d_now = -H_now * df(x_now,opts);
     alpha = armijo_line_search(f,x_now,d_now,opts);
     x_next = x_now + alpha * d_now;
