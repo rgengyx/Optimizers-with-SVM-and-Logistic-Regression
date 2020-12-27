@@ -20,12 +20,7 @@ opts.agm.step_size = step_size(opts);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-if func == "svm"
-    f = svm();
-elseif func == "logr"
-    f = logistic_regression();
-end
+f = func();
 
 x0 = opts.x0;
 [x,k,ngs] = agm_unknown(f,x0,opts);

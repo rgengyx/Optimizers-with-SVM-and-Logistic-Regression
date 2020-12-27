@@ -11,8 +11,12 @@ addpath(genpath('run'));
 %%%%%%%%%%%%%
 % Load data %
 %%%%%%%%%%%%%
-global data1;global label1;global data2;global label2;
-load("small/small_dataset_sample.mat");
+global data1 label1 data2 label2;
+global A b;
+
+% load("small/small_dataset_sample.mat");
+load("bigdata/mushrooms/mushrooms_train.mat");
+load("bigdata/mushrooms/mushrooms_train_label.mat");
 
 % Sample
 opts.sample.m = length(data1);
@@ -30,7 +34,7 @@ opts.x0 = [0,0,0]';
 method_cmp_list = {'gm','agm','bfgs','lbfgs'};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)
-    [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i}] = run(logistic_regression,method_cmp_list{i},opts);
 end
 %%%%%%%%
 % test %
