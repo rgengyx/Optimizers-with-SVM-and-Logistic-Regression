@@ -28,7 +28,7 @@ opts.x0 = zeros(size(A,2) + 1, 1);
 % svm, logr
 % gm, agm, bfgs, lbfgs
 
-x = run(svm_sparse,"agm",opts);
+x = run(svm_sparse,"bfgs",opts);
 
 %%%%%%%%
 % test %

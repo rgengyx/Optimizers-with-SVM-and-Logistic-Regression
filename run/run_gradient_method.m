@@ -13,7 +13,15 @@ rng("default");
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f = func();
+if func == "svm"
+    f = svm();
+elseif func == "svm_sparse"
+    f = svm_sparse();
+elseif func == "logr"
+    f = logr();
+elseif func == "logr_sparse"
+    f = logr_sparse();
+end
 
 x0 = opts.x0;
 [x,k,ngs] = gradient_method(f,x0,opts);
