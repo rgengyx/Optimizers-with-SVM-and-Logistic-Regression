@@ -1,5 +1,4 @@
 function [x,count,ngs] = run(func, method, opts)
-    
 % import
 addpath(genpath('run'));
 
