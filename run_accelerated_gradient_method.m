@@ -27,27 +27,28 @@ data1 = data1(:,train_index);label1 = label1(train_index);
 
 % AGM
 opts.agm.maxit = 3000;
-opts.agm.tol = 1e-4;
+opts.agm.tol = 1e-5;
 opts.gm.display = true;
 opts.gm.plot = false;
 opts.agm.print = true;
 opts.agm.beta = @beta;
-opts.agm.L = 2;
+opts.agm.L = 500;
 opts.agm.step_size = step_size(opts);
+
+
+% Sample
+opts.sample.m = length(data1);
 
 %%%%%%%%%%%%%%%%%%%%%%
 % Parameters Options %
 %%%%%%%%%%%%%%%%%%%%%%
 
 % SVM
-opts.svm.lambda = 0.1;
+opts.svm.lambda = 1/opts.sample.m;
 opts.svm.delta = 1e-1;
 
 % Logistic Regression
 opts.logr.lambda = 0.1;
-
-% Sample
-opts.sample.m = length(data1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Call Optimization Methods %
@@ -56,7 +57,7 @@ opts.sample.m = length(data1);
 %f = svm();
 f = logistic_regression();
 
-x0 = [0;0;0];
+x0 = [1;0;0];
 [x,ks,ngs] = agm_unknown(f,x0,opts);
 %[x,ks,ngs] = agm_known(f,x0,opts);
 

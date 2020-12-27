@@ -1,4 +1,4 @@
-function [x_end,count] = L_BFGS(f,x0,opts)
+function [x_end,count,ngs] = L_BFGS(f,x0,opts)
 %BFGS 此处显示有关此函数的摘要
 %   此处显示详细说明
 %addpath('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\project\project_git\MDS6106_Project\search')
@@ -9,13 +9,14 @@ limit_step = opts.lbfgs.limit_step;
 
 count = 0;
 x_now = x0;
+ngs = [];
 
 %global s_buffer;global y_buffer;global alpha_buffer;
 while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
     %mimit the two-recursion loop, modify it with the former m steps
     %when enter a loop, x_now is known, former m steps buffer is known
     q = -f.grad(x_now,opts);
-    
+    ngs(:,count + 1) = norm(q);
     %recursion 1
     buffer_end = min(count,limit_step);
     if buffer_end == 0 %the first step

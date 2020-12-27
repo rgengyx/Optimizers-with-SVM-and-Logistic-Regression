@@ -15,8 +15,8 @@ rng("default");
 %%%%%%%%%%%%%
 global data1;global label1;
 %load("small/small_dataset_sample.mat");
-load('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\project\datasets\datasets\mushrooms\mushrooms_train.mat')
-load('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\project\datasets\datasets\mushrooms\mushrooms_train_label.mat')
+load('bigdata\datasets\mushrooms\mushrooms_train.mat')
+load('bigdata\datasets\mushrooms\mushrooms_train_label.mat')
 %I used full matrix here, but should be modified for big dimension
 data1 = full(A');
 label1 = full(b');
@@ -75,8 +75,9 @@ f = logistic_regression();
 x0 = zeros(opts.sample.dim(1) + 1,1);
 
 tic
-[x,k] = L_BFGS(f,x0,opts);
+[x,k,ngs] = L_BFGS(f,x0,opts);
 toc
+
 %%%%%%%%%%%%%%%%%
 %     test      %
 %%%%%%%%%%%%%%%%%

@@ -1,4 +1,4 @@
-function [x_end,count] = BFGS(f,x0,opts)
+function [x_end,count,ngs] = BFGS(f,x0,opts)
 %BFGS 此处显示有关此函数的摘要
 %   此处显示详细说明
 %addpath('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\project\project_git\MDS6106_Project\search')
@@ -13,12 +13,13 @@ H_now = eye(n) * opts.bfgs.rou;
 df = f.grad;
 %set initial x_now
 x_now = x0;
+ngs = [];
 
 while(count < opts.bfgs.maxit)
     d_now = -H_now * df(x_now,opts);
     alpha = armijo_line_search(f,x_now,d_now,opts);
     x_next = x_now + alpha * d_now;
-    norm(df(x_next,opts))
+    ngs(count + 1) = norm(df(x_next,opts));
     if(norm(df(x_next,opts)) <= opts.bfgs.epsilon)
         break;
     end
