@@ -1,5 +1,4 @@
 function [CR_train,CR_test] = train_test_accuracy(x)
-
     global data1;global label1;global data2;global label2;
 
     opt1.paras = x;
