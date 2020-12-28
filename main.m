@@ -1,3 +1,5 @@
+clear
+
 % Add folder to path
 addpath(genpath('method'));
 addpath(genpath('run'));
@@ -32,7 +34,7 @@ opts = config(opts);
 
 %initial point set
 opts.x0 = [0,0,0]';
-method_cmp_list = {"lbfgs","lbfgs_sgd","lbfgs_sgd_batch"};
+method_cmp_list = {"gm_sgd"};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
