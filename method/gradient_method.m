@@ -13,6 +13,7 @@ norms = [];
 for k = 1:opts.gm.maxit
     
     % Calculate Gradient
+    opts.sgd_ratio = (1 + 99 * opts.sgd_ratio) / 100;%here use the diminish sgd ratio
     d = -f.grad(x,opts);
     
     % Calculate Alpha 

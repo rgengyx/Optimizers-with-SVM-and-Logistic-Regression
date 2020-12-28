@@ -43,7 +43,7 @@ opts.lbfgs.maxit = 400;
 opts.lbfgs.limit_step = 10;%range [5,25]
 opts.lbfgs.batch_size = 100;
 opts.lbfgs.batch_epsilon = 1e-1;
-opts.lbfgs.print = false;
+opts.gm.print = true;
 
 %%%%%%%%%%%%%%%%%%%%%
 % Search Parameters %

@@ -54,6 +54,8 @@ for i = 1:batch_count %do with the batch
         f = logr();
     elseif func == "logr_sparse"
         f = logr_sparse();
+    elseif func == "logr_sgd"
+        f = logr_sgd();
     end
     
     %use the former batch result for next train

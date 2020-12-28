@@ -26,11 +26,13 @@ opts = config(opts);
 
 % svm, logr
 % gm, agm, bfgs, lbfgs
-% agm_sgd, bfgs_sgd, lbfgs_sgd
+% gm_batch,agm_batch,bfgs_batch,lbfgs_batch
+% gm_sgd,agm_sgd, bfgs_sgd, lbfgs_sgd
+% gm_sgd_batch,agm_sgd_batch, bfgs_sgd_batch, lbfgs_sgd_batch
 
 %initial point set
 opts.x0 = [0,0,0]';
-method_cmp_list = {"gm","gm_sgd"};
+method_cmp_list = {"lbfgs","lbfgs_sgd","lbfgs_sgd_batch"};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
