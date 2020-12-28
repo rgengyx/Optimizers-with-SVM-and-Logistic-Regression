@@ -15,11 +15,10 @@ addpath(genpath('run'));
 %%%%%%%%%%%%%
 global data1;global label1;global data2;global label2;
 
-load("bigdata/mushrooms/mushrooms_train.mat");
-load("bigdata/mushrooms/mushrooms_train_label.mat");
+dataset = "sido0";
 
-% load("bigdata/phishing/phishing_train.mat");
-% load("bigdata/phishing/phishing_train_label.mat");
+load("bigdata/"+dataset+"/"+dataset+"_train.mat");
+load("bigdata/"+dataset+"/"+dataset+"_train_label.mat");
 
 data1 = A;label1 = b;
 
@@ -43,11 +42,16 @@ label1 = label1(rand_index(split_index+1:end));
 % svm, logr
 % gm, agm, bfgs, lbfgs
 % gm_batch,agm_batch,bfgs_batch,lbfgs_batch
-method_cmp_list = {"gm","agm","bfgs","lbfgs"};
+% gm_sgd
+% gm_sgd_batch
+
+method_cmp_list = {"lbfgs","lbfgs_sgd","lbfgs_batch"};
+
 x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
     % logr_sparse,logr_sgd_sparse
+    
     [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr_sparse",method_cmp_list{i},opts);
     toc
 end
@@ -78,13 +82,12 @@ end
 legend(method_cmp_list);
 
 % Accuracy Plot
-figure('Name','Train Test Accuracy');
-for i = 1:length(train_accs_list)
+for i = 1:length(method_cmp_list)
+    figure('Name','Train Test Accuracy' + method_cmp_list{i});
     plot(train_accs_list{i});
     hold on;
-end
-for i = 1:length(test_accs_list)
     plot(test_accs_list{i});
     hold on;
+    legend({"Training Accuracy", "Test Accuracy"});
 end
-legend({"Training Accuracy", "Test Accuracy"});
+

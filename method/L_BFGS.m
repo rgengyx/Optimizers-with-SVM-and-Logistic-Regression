@@ -19,6 +19,7 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
     %when enter a loop, x_now is known, former m steps buffer is known
     q = -f.grad(x_now,opts);
     ngs(:,count + 1) = norm(q);
+    
     %recursion 1
     buffer_end = min(count,limit_step);
     if buffer_end == 0 %the first step
@@ -67,6 +68,10 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
     x_now = x_next;
     count = count + 1;
     
+    if isnan(f.obj(x_now,opts))
+       break 
+    end
+    
     % test accuracy
     [CR_train,CR_test] = train_test_accuracy(x_now);
     train_accs(count) = CR_train;
@@ -75,6 +80,7 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
     if opts.lbfgs.print
         obj_val   = f.obj(x_now,opts);
         ng = norm(q);
+        
         fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',count,obj_val,ng,alpha,CR_train, CR_test);
     end
     

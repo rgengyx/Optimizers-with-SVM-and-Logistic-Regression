@@ -54,7 +54,7 @@ for i = 1:batch_count %do with the batch
         f = logr_sparse();
     elseif func == "logr_sgd"
         f = logr_sgd();
-    elseif func == "logr_sgd_sparse"
+    elseif func == "logr_sparse_sgd"
         f = logr_sgd_sparse();
     end
     
