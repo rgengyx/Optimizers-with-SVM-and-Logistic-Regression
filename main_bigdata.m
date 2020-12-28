@@ -10,7 +10,6 @@ addpath(genpath('train_test'));
 %%%%%%%%%%%%%
 % Load data %
 %%%%%%%%%%%%%
-global data1 label1 data2 label2;
 global A b;
 
 load("bigdata/mushrooms/mushrooms_train.mat");
@@ -28,7 +27,7 @@ opts.x0 = zeros(size(A,2) + 1, 1);
 % svm, logr
 % gm, agm, bfgs, lbfgs
 
-x = run("svm_sparse","bfgs",opts);
+x = run("svm_sparse","lbfgs",opts);
 
 %%%%%%%%
 % test %

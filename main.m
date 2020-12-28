@@ -12,11 +12,8 @@ addpath(genpath('run'));
 % Load data %
 %%%%%%%%%%%%%
 global data1;global label1;global data2;global label2;
-global A; global b;
 
 load("small/small_dataset_sample.mat");
-% load("bigdata/mushrooms/mushrooms_train.mat");
-% load("bigdata/mushrooms/mushrooms_train_label.mat");
 
 % Sample
 sizes = size(data1);
