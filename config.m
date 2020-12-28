@@ -34,6 +34,7 @@ opts.bfgs.rou = 1;
 opts.bfgs.maxit = 1000;
 opts.bfgs.batch_size = 200;
 opts.bfgs.batch_epsilon = 1e-2;
+opts.bfgs.print = true;
 
 % LBFGS
 opts.lbfgs.epsilon = 1e-8;
@@ -44,6 +45,7 @@ opts.lbfgs.limit_step = 10;%range [5,25]
 opts.lbfgs.batch_size = 100;
 opts.lbfgs.batch_epsilon = 1e-1;
 opts.lbfgs.print = false;
+opts.lbfgs.print = true;
 
 %%%%%%%%%%%%%%%%%%%%%
 % Search Parameters %
