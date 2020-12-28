@@ -1,3 +1,5 @@
+clear
+
 % Add folder to path
 addpath(genpath('method'));
 addpath(genpath('run'));
