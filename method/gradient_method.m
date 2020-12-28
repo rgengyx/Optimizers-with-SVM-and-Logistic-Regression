@@ -1,7 +1,4 @@
-function [x, k, ngs, norms] = gradient_method(f,x0,opts)
-
-% Add files to path
-addpath(genpath('search'));
+function [x, k, ngs,train_accs, test_accs] = gradient_method(f,x0,opts)
 
 x = x0;
 k = 0;
@@ -9,6 +6,8 @@ alpha = 0;
 ks = [];
 ngs = [];
 norms = [];
+train_accs = [];
+test_accs = [];
 
 for k = 1:opts.gm.maxit
     
@@ -46,11 +45,14 @@ for k = 1:opts.gm.maxit
     ngs(k) = ng;
 %     norms(k) = norm(x - [1;1]);
     
+    % test accuracy
+    [CR_train,CR_test] = train_test_accuracy(x);
+    train_accs(k) = CR_train;
+    test_accs(k) = CR_test;
     
     if opts.gm.print
         obj_val   = f.obj(x,opts);
-        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',k,obj_val,ng,alpha);
-%         x
+        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',k,obj_val,ng,alpha,CR_train, CR_test);
     end
     
     if ng <= opts.gm.tol

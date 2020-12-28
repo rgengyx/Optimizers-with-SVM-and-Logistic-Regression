@@ -1,4 +1,5 @@
-function [x_end,count,ngs] = BFGS(f,x0,opts)
+function [x_end,count,ngs, train_accs, test_accs] = BFGS(f,x0,opts)
+
 %BFGS 此处显示有关此函数的摘要
 %   此处显示详细说明
 %addpath('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\project\project_git\MDS6106_Project\search')
@@ -14,6 +15,8 @@ df = f.grad;
 %set initial x_now
 x_now = x0;
 ngs = [];
+train_accs = [];
+test_accs = [];
 
 while(count < opts.bfgs.maxit)
     %df(x_now,opts)
@@ -43,10 +46,15 @@ while(count < opts.bfgs.maxit)
     H_now = H_next;
     count = count + 1;
 
+    % test accuracy
+    [CR_train,CR_test] = train_test_accuracy(x_now);
+    train_accs(count) = CR_train;
+    test_accs(count) = CR_test;
+    
     if opts.bfgs.print
         obj_val   = f.obj(x_now,opts);
         ng = norm(df(x_now,opts));
-        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',count,obj_val, ng,alpha);
+        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',count,obj_val,ng,alpha,CR_train, CR_test);
     end
     
 end

@@ -1,4 +1,4 @@
-function [x,k,ngs] = run_L_bfgs(func, opts)
+function [x, k, ngs, train_accs, test_accs]  = run_L_bfgs(func, opts)
 
 % Add folder to path
 addpath(genpath('method'));
@@ -23,9 +23,11 @@ elseif func == "logr_sparse"
     f = logr_sparse();
 elseif func == "logr_sgd"
     f = logr_sgd();
+elseif func == "logr_sgd_sparse"
+    f = logr_sgd_sparse();
 end
 
 x0 = opts.x0;
-[x,k,ngs] = L_BFGS(f,x0,opts);
+[x, k, ngs, train_accs, test_accs]  = L_BFGS(f,x0,opts);
 
 end

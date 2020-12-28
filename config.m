@@ -9,7 +9,7 @@ opts.sgd_ratio = 1 / 1.2; %set 1 if no sgd, else less than 1 for initial batch s
 
 % GM
 opts.gm.maxit = 3000;
-opts.gm.tol = 1e-4;
+opts.gm.tol = 1e-3;
 opts.gm.display = true;
 opts.gm.step_size_method = "armijo";
 opts.gm.plot = false;
@@ -44,7 +44,6 @@ opts.lbfgs.maxit = 400;
 opts.lbfgs.limit_step = 10;%range [5,25]
 opts.lbfgs.batch_size = 100;
 opts.lbfgs.batch_epsilon = 1e-1;
-opts.lbfgs.print = false;
 opts.lbfgs.print = true;
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -65,7 +64,7 @@ opts.armijo.gamma = 0.1;
 global data1;
 sizes = size(data1);
 
-opts.split_ratio = 0.2;
+opts.split_ratio = 0.1;
 
 % SVM
 opts.svm.lambda = 1 / opts.sample.m;

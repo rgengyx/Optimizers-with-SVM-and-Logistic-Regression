@@ -1,4 +1,4 @@
-function [x,k,ngs] = run_accelerated_gradient_method(func, opts)
+function [x, k, ngs, train_accs, test_accs]  = run_accelerated_gradient_method(func, opts)
 
 % Add folder to path
 addpath(genpath('method'));
@@ -30,11 +30,13 @@ elseif func == "logr_sparse"
     f = logr_sparse();
 elseif func == "logr_sgd"
     f = logr_sgd();
+elseif func == "logr_sgd_sparse"
+    f = logr_sgd_sparse();
 end
 
 x0 = opts.x0;
-[x,k,ngs] = agm_unknown(f,x0,opts);
-%[x,k,ngs] = agm_known(f,x0,opts);
+[x, k, ngs, train_accs, test_accs]  = agm_unknown(f,x0,opts);
+%[x, k, ngs, train_accs, test_accs]  = agm_known(f,x0,opts);
 
 %%%%%%%%%%%%%%%%%%%%%
 % Utility Functions %

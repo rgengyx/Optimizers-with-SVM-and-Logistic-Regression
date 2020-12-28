@@ -45,11 +45,11 @@ opts.sample.m = sizes(2);%the count of sample
 
 %initial point set
 opts.x0 = [0,0,0]';
-method_cmp_list = {"gm"};
-x_list = {};k_list = {};ngs_list = {};
+method_cmp_list = {"bfgs_sgd_batch"};
+x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr",method_cmp_list{i},opts);
     toc
 end
 %%%%%%%%
@@ -61,13 +61,28 @@ for i = 1:length(x_list)%here use global, no return value, maybe change further
     [CR_train,CR_test] = train_test_accuracy(x_list{i});
     ac_list(:,i) = [CR_train,CR_test]';
 end
+
 %%%%%%%%%%%%%
 % Visualize %
 %%%%%%%%%%%%%
 
 %visualize(x, data2, label2);
+% Convergence Plot
+figure('Name','Convergence Plot');
 for i = 1:length(ngs_list)
     plot(log(ngs_list{i}));
     hold on;
 end
 legend(method_cmp_list);
+
+% Accuracy Plot
+figure('Name','Train Test Accuracy');
+for i = 1:length(train_accs_list)
+    plot(train_accs_list{i});
+    hold on;
+end
+for i = 1:length(test_accs_list)
+    plot(test_accs_list{i});
+    hold on;
+end
+legend({"Training Accuracy", "Test Accuracy"});
