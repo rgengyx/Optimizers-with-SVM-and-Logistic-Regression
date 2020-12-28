@@ -45,7 +45,7 @@ function f = svm()
         global data1 label1;
         data = data1; label = label1;
         penalty = 0;
-        m = 2;
+        m = opts.sample.m;
         for i=1:m
             a = data(:,i);
             b = label(i);
@@ -56,7 +56,7 @@ function f = svm()
     function penalty = dx_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = 2;
+        m = opts.sample.m;
         penalty = 0;
         delta = opts.svm.delta;
         for i=1:m
@@ -76,7 +76,7 @@ function f = svm()
     function penalty = dy_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = 2;
+        m = opts.sample.m;
         penalty = 0;
         delta = opts.svm.delta;
         for i=1:m

@@ -43,12 +43,12 @@ label1 = label1(rand_index(split_index+1:end));
 % svm, logr
 % gm, agm, bfgs, lbfgs
 % gm_batch,agm_batch,bfgs_batch,lbfgs_batch
-method_cmp_list = {"lbfgs_batch"};
+method_cmp_list = {"gm","agm","bfgs","lbfgs"};
 x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
     % logr_sparse,logr_sgd_sparse
-    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr_sgd_sparse",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr_sparse",method_cmp_list{i},opts);
     toc
 end
 

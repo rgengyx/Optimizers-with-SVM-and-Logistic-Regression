@@ -8,7 +8,7 @@ function opts = config(opts)
 opts.sgd_ratio = 1 / 1.2; %set 1 if no sgd, else less than 1 for initial batch sgd
 
 % GM
-opts.gm.maxit = 3000;
+opts.gm.maxit = 50;
 opts.gm.tol = 1e-3;
 opts.gm.display = true;
 opts.gm.step_size_method = "armijo";
