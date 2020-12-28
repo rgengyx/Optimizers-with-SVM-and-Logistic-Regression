@@ -27,8 +27,8 @@ rand_index = randperm(opts.sample.m,opts.sample.m);split_index = floor(opts.samp
 data2 = data1(:,rand_index(1:split_index));
 label2 = label1(rand_index(1:split_index));
 
-data1 = data1(:,rand_index(split_index:end));
-label1 = label1(rand_index(split_index:end));
+data1 = data1(:,rand_index(split_index+1:end));
+label1 = label1(rand_index(split_index+1:end));
 
 sizes = size(data1);
 opts.sample.m = sizes(2);%the count of sample
@@ -45,11 +45,11 @@ opts.sample.m = sizes(2);%the count of sample
 
 %initial point set
 opts.x0 = [0,0,0]';
-method_cmp_list = {"lbfgs"};
+method_cmp_list = {"gm"};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i}] = run("svm",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
     toc
 end
 %%%%%%%%

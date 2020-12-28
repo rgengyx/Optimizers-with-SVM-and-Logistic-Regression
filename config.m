@@ -64,9 +64,8 @@ opts.armijo.gamma = 0.1;
 %Sample
 global data1;
 sizes = size(data1);
-opts.sample.m = sizes(2);%the count of sample
 
-opts.split_ratio = 0.8;
+opts.split_ratio = 0.2;
 
 % SVM
 opts.svm.lambda = 1 / opts.sample.m;
