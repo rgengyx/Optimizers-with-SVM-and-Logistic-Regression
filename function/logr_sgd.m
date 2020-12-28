@@ -59,7 +59,7 @@ function f = logr_sgd()
             summand = (b*a*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
             summation = summation + summand;
         end
-        penalty = -1/m * summation;
+        penalty = -1/floor(m * opts.sgd_ratio) * summation;
     end
 
     function penalty = dy_penalty(x,y,opts)
@@ -75,6 +75,6 @@ function f = logr_sgd()
             summand = (b*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
             summation = summation + summand;
         end
-        penalty = -1/m * summation;
+        penalty = -1/floor(m * opts.sgd_ratio) * summation;
     end
 end

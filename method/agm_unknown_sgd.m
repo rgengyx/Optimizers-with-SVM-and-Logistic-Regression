@@ -1,4 +1,4 @@
-function [x,k,ngs] = agm_unknown(f,x0,opts)
+function [x,k,ngs] = agm_unknown_sgd(f,x0,opts)
 
 % import
 addpath(genpath('search'));
@@ -16,7 +16,7 @@ for k = 1:opts.agm.maxit
     y = x + beta * (x - prev_x);
     prev_x = x;
     alpha = prev_alpha;
-    opts.sgd_ratio = (1 + 99 * opts.sgd_ratio) / 100;%here use the diminish sgd ratio
+    opts.sgd_ratio = (1 + opts.sgd_ratio) / 2;%here use the diminish sgd ratio
     grad = f.grad(y,opts);
     x = y - alpha * grad;
 

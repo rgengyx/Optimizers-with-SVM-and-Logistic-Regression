@@ -28,6 +28,8 @@ elseif func == "logr"
     f = logr();
 elseif func == "logr_sparse"
     f = logr_sparse();
+elseif func == "logr_sgd"
+    f = logr_sgd();
 end
 
 x0 = opts.x0;

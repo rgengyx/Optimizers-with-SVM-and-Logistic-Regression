@@ -5,7 +5,7 @@ function opts = config(opts)
 %%%%%%%%%%%%%%%%%%%%%
 
 %sgd ratio
-opts.sgd_ratio = 1 / 1.2;
+opts.sgd_ratio = 1 / 2; %set 1 if no sgd, else less than 1 for initial batch sgd
 
 % GM
 opts.gm.maxit = 3000;
@@ -19,7 +19,7 @@ opts.gm.batch_epsilon = 1e-2;
 
 % AGM
 opts.agm.maxit = 3000;
-opts.agm.tol = 1e-4;
+opts.agm.tol = 1e-6;
 opts.gm.display = true;
 opts.gm.plot = false;
 opts.agm.print = false;

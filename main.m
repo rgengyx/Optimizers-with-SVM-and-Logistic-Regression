@@ -29,10 +29,11 @@ opts = config(opts);
 
 % svm, logr
 % gm, agm, bfgs, lbfgs
+% agm_sgd, bfgs_sgd, lbfgs_sgd
 
 %initial point set
 opts.x0 = [0,0,0]';
-method_cmp_list = {"bfgs_sgd"};
+method_cmp_list = {"gm","gm_sgd"};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
