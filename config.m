@@ -22,7 +22,7 @@ opts.agm.maxit = 3000;
 opts.agm.tol = 1e-6;
 opts.gm.display = true;
 opts.gm.plot = false;
-opts.agm.print = false;
+opts.agm.print = true;
 opts.agm.L = 2;
 opts.agm.batch_size = 100;
 opts.agm.batch_epsilon = 1e-2;
@@ -59,8 +59,15 @@ opts.armijo.gamma = 0.1;
 % Parameters Options %
 %%%%%%%%%%%%%%%%%%%%%%
 
+%Sample
+global data1;
+sizes = size(data1);
+opts.sample.m = sizes(2);%the count of sample
+
+opts.split_ratio = 0.8;
+
 % SVM
-opts.svm.lambda = 1/opts.sample.m;
+opts.svm.lambda = 1 / opts.sample.m;
 opts.svm.delta = 1e-4;
 
 % Logistic Regression

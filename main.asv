@@ -21,15 +21,11 @@ opts.sample.m = sizes(2);%the count of sample
 opts = config(opts);
 
 %split data, data1 for train, data2 for test
-rand_index = randperm(opts.sample.m,opts.sample.m);split_index = floor(opts.sample.m * opts.split_ratio);
-data2 = data1(:,rand_index(1:split_index));
-label2 = label1(rand_index(1:split_index));
-
-data1 = data1(:,rand_index(split_index:end));
-label1 = label1(rand_index(split_index:end));
-
-sizes = size(data1);
-opts.sample.m = sizes(2);%the count of sample
+rand_index = randperm(opts.sample.m,opts.sample.m);
+data2 = data1(rand_index(1:floor(opts.sample.m * opts.split_ratio)));
+label2 = label1(rand_index(1:floor(opts.sample.m * opts.split_ratio)));
+data1 = data1(rand_index(floor(opts.sample.m * opts.split_ratio)+1):));
+label1 = label1(rand_index(1:floor(opts.sample.m * opts.split_ratio)+1:));
 
 %%%%%%%
 % Run %
@@ -43,7 +39,7 @@ opts.sample.m = sizes(2);%the count of sample
 
 %initial point set
 opts.x0 = [0,0,0]';
-method_cmp_list = {"lbfgs"};
+method_cmp_list = {"agm","agm_batch"};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
