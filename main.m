@@ -16,7 +16,7 @@ addpath(genpath('run'));
 global data1;global label1;global data2;global label2;
 
 %load("small/small_dataset_sample.mat");
-dataset = "covtype";
+dataset = "mushrooms";
 
 load("bigdata/"+dataset+"/"+dataset+"_train.mat");
 load("bigdata/"+dataset+"/"+dataset+"_train_label.mat");
@@ -59,7 +59,7 @@ x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};t
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
     [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
-    time_list(i) =  toc;
+    time_list(i) =  toc
 end
 
 %{
@@ -115,6 +115,11 @@ for i = 1:length(test_accs_list)
     plot(test_accs_list{i});
     hold on;
 end
-legend(string(lbfgs_lambda_list))
+%legend(string(lbfgs_lambda_list))
+ylabel("norm(grad(x))");
+xlabel("iteration times");
+title(dataset + " result");
 %legend({"Training Accuracy", "Test Accuracy"});
 
+% Save the result
+save("bigdataresult/" + dataset + "/" + dataset + ".mat","method_name_list","k_list","x_list","ngs_list","time_list","opts");
