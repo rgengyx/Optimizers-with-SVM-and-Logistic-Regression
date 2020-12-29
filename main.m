@@ -109,7 +109,6 @@ end
 for i = 1:length(test_accs_list)
     plot(test_accs_list{i});
     hold on;
-    legend({"Training Accuracy", "Test Accuracy"});
 end
 legend(string(lbfgs_lambda_list))
 %legend({"Training Accuracy", "Test Accuracy"});

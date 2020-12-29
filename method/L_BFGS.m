@@ -74,7 +74,7 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
     k = count;
     % test accuracy
     if opts.cr_save
-        [CR_train,CR_test] = train_test_accuracy(x);
+        [CR_train,CR_test] = train_test_accuracy(x_now);
         train_accs(k) = CR_train;
         test_accs(k) = CR_test;
     end
