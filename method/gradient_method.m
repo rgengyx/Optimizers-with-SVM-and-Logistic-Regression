@@ -15,7 +15,9 @@ for k = 1:opts.gm.maxit
     % Calculate Gradient
     opts.sgd_ratio = (1 + 99 * opts.sgd_ratio) / 100;%here use the diminish sgd ratio
     d = -f.grad(x,opts);
-    
+    if norm(d) < opts.gm.sgd_epsilon
+        opts.sgd_ratio = 1;
+    end
     % Calculate Alpha 
     if strcmp(opts.gm.step_size_method, "exact")
         alpha = exact_line_search(f,x,opts);

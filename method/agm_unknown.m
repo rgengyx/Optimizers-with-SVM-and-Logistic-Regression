@@ -16,8 +16,11 @@ for k = 1:opts.agm.maxit
     y = x + beta * (x - prev_x);
     prev_x = x;
     alpha = prev_alpha;
-    opts.sgd_ratio = (1 + 99 * opts.sgd_ratio) / 100;%here use the diminish sgd ratio
+    %opts.sgd_ratio = (1 + 99 * opts.sgd_ratio) / 100;%here use the diminish sgd ratio
     grad = f.grad(y,opts);
+    if norm(grad) < opts.agm.sgd_epsilon;
+        opts.sgd_ratio = 1;
+    end
     x = y - alpha * grad;
 
     while(f.obj(x,opts)-f.obj(y,opts) > -alpha/2*norm(grad)^2)

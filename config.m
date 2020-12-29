@@ -5,27 +5,29 @@ function opts = config(opts)
 %%%%%%%%%%%%%%%%%%%%%
 
 %sgd ratio
-opts.sgd_ratio = 1 / 1.2; %set 1 if no sgd, else less than 1 for initial batch sgd
+opts.sgd_ratio = 1 / 1.5; %set 1 if no sgd, else less than 1 for initial batch sgd
 
 % GM
 opts.gm.maxit = 3000;
-opts.gm.tol = 1e-4;
+opts.gm.tol = 1e-6;
 opts.gm.display = true;
 opts.gm.step_size_method = "armijo";
 opts.gm.plot = false;
-opts.gm.print = true;
+opts.gm.print = false;
 opts.gm.batch_size = 100;
 opts.gm.batch_epsilon = 1e-2;
+opts.gm.sgd_epsilon = 1e-4;
 
 % AGM
 opts.agm.maxit = 3000;
-opts.agm.tol = 1e-6;
+opts.agm.tol = 1e-8;
 opts.gm.display = true;
 opts.gm.plot = false;
-opts.agm.print = true;
+opts.agm.print = false;
 opts.agm.L = 2;
-opts.agm.batch_size = 100;
+opts.agm.batch_size = 50;
 opts.agm.batch_epsilon = 1e-2;
+opts.agm.sgd_epsilon = 5 * 1e-3;
 
 % BFGS
 opts.bfgs.epsilon = 1e-8;

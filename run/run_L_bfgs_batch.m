@@ -60,7 +60,7 @@ for i = 1:batch_count %do with the batch
     ngs = [ngs,ngs_new];
 end
 
-%fiannly use the whole dataset for final descent
+%finally use the whole dataset for final descent
 data1 = data1_ori;label1 = label1_ori;
 %renew the m as needs
 sizes = size(label1);opts.sample.m = sizes(2);

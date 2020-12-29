@@ -44,12 +44,12 @@ opts.sample.m = sizes(2);%the count of sample
 % gm_sgd_batch,agm_sgd_batch, bfgs_sgd_batch, lbfgs_sgd_batch
 
 %initial point set
-opts.x0 = [0,0,0]';
-method_cmp_list = {"lbfgs"};
+opts.x0 = [2,1,0]';
+method_cmp_list = {"gm","gm_sgd"};
 x_list = {};k_list = {};ngs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i}] = run("svm",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
     toc
 end
 %%%%%%%%
@@ -67,7 +67,7 @@ end
 
 %visualize(x, data2, label2);
 for i = 1:length(ngs_list)
-    plot(log(ngs_list{i}));
+    plot(log(ngs_list{i}) / log(10));
     hold on;
 end
 legend(method_cmp_list);
