@@ -16,7 +16,7 @@ addpath(genpath('run'));
 global data1;global label1;global data2;global label2;
 
 %load("small/small_dataset_sample.mat");
-dataset = "covtype";
+dataset = "rcv1";
 
 load("bigdata/"+dataset+"/"+dataset+"_train.mat");
 load("bigdata/"+dataset+"/"+dataset+"_train_label.mat");
@@ -49,17 +49,16 @@ opts.sample.m = sizes(2);%the count of sample
 
 %initial point set
 opts.x0 = zeros(size(data1,1) + 1,1);
-method_cmp_list = {"lbfgs","lbfgs_batch","lbfgs_sgd","lbfgs_sgd_batch"};method_name_list = {};
+method_cmp_list = {"lbfgs_batch","lbfgs_sgd","lbfgs_sgd_batch"};method_name_list = {};
 
 for i = 1:length(method_cmp_list)
     method_name_list{i} = strrep(method_cmp_list{i},"_"," ");
 end
-
-x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};time_list = [];
+x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
     [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
-    time_list(i) =  toc;
+    toc
 end
 
 %{

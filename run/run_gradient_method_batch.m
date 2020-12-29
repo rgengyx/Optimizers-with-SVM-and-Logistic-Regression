@@ -28,14 +28,9 @@ batch_size = opts.bfgs.batch_size;batch_count = ceil(ori_m / batch_size);
 x = opts.x0;k = 0;ngs = [];train_accs=[];test_accs=[];
 
 for i = 1:batch_count %do with the batch
-    
-    if issparse(data1) == 1
-        data1 = data1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)),:);
-        label1 = label1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
-    else
-        data1 = data1_ori(:,rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
-        label1 = label1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
-    end
+
+    data1 = data1_ori(:,rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
+    label1 = label1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
     %renew the m as needs
     sizes = size(label1);
     opts.sample.m = sizes(2);

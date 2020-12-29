@@ -5,7 +5,7 @@ function opts = config(opts)
 %%%%%%%%%%%%%%%%%%%%%
 
 %if with big data, not save accuracy to speed up
-opts.cr_save = true;
+opts.cr_save = false;
 
 %sgd ratio
 opts.sgd_ratio = 1 / 1.5; %set 1 if no sgd, else less than 1 for initial batch sgd
@@ -45,8 +45,8 @@ opts.bfgs.print = true;
 opts.lbfgs.epsilon = 1e-6;
 opts.lbfgs.H_epsilon = 1e-14;
 opts.lbfgs.rou = 1;
-opts.lbfgs.maxit = 400;
-opts.lbfgs.limit_step = 10;%range [5,25]
+opts.lbfgs.maxit = 50;
+opts.lbfgs.limit_step = 5;%range [5,25]
 opts.lbfgs.batch_size = 100;
 opts.lbfgs.batch_epsilon = 1e-1;
 opts.lbfgs.print = true;
