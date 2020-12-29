@@ -1,4 +1,4 @@
-function [x_end,count,ngs] = L_BFGS(f,x0,opts)
+function [x_end,count,ngs, train_accs, test_accs] = L_BFGS(f,x0,opts)
 %BFGS 此处显示有关此函数的摘要
 %   此处显示详细说明
 %addpath('D:\desktop2\new start learning\cuhksz learning\optimization-MDS6106\project\project_git\MDS6106_Project\search')
@@ -10,6 +10,8 @@ limit_step = opts.lbfgs.limit_step;
 count = 0;
 x_now = x0;
 ngs = [];
+train_accs = [];
+test_accs = [];
 
 %global s_buffer;global y_buffer;global alpha_buffer;
 while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
@@ -17,6 +19,7 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
     %when enter a loop, x_now is known, former m steps buffer is known
     q = -f.grad(x_now,opts);
     ngs(:,count + 1) = norm(q);
+    
     %recursion 1
     buffer_end = min(count,limit_step);
     if buffer_end == 0 %the first step
@@ -60,16 +63,27 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
         s_buffer{buffer_end} = x_next - x_now;
         y_buffer{buffer_end} = f.grad(x_next,opts) - f.grad(x_now,opts);
     end
+        
+    %renew the x_now
+    x_now = x_next;
+    count = count + 1;
+    
+    if isnan(f.obj(x_now,opts))
+       break 
+    end
+    
+    % test accuracy
+    [CR_train,CR_test] = train_test_accuracy(x_now);
+    train_accs(count) = CR_train;
+    test_accs(count) = CR_test;
     
     if opts.lbfgs.print
         obj_val   = f.obj(x_now,opts);
         ng = norm(q);
-        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',count,obj_val, ng,alpha);
+        
+        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',count,obj_val,ng,alpha,CR_train, CR_test);
     end
     
-    %renew the x_now
-    x_now = x_next;
-    count = count + 1;
 end
 x_end = x_now;
 end

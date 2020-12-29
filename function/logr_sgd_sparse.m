@@ -1,4 +1,4 @@
-function f = logr()
+function f = logr_sgd_sparse()
 
     %%%%%%%%%%%%%%%%%%%%
     % Function Options %
@@ -35,9 +35,9 @@ function f = logr()
         data = data1; label = label1;
         penalty = 0;
         summation = 0;
-        m = opts.sample.m;
+        m = size(data1,1);
         for i=1:m
-            a = data(:,i);
+            a = data(i,:)';
             b = label(i);
             t = 1 + exp(-b * (a' * x + y));
             summand = log(t);
@@ -49,30 +49,32 @@ function f = logr()
     function penalty = dx_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = opts.sample.m;
+        m = size(data1,1);
         penalty = 0;
         summation = 0;
+        rand_index = randperm(m,floor(m * opts.sgd_ratio)); %random choose gradient direction here
         for i=1:m
-            a = data(:,i);
+            a = data(i,:)';
             b = label(i);
             summand = (b*a*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
             summation = summation + summand;
         end
-        penalty = -1/m * summation;
+        penalty = -1/floor(m * opts.sgd_ratio) * summation;
     end
 
     function penalty = dy_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = opts.sample.m;
+        m = size(data1,1);
         penalty = 0;
         summation = 0;
+        rand_index = randperm(m,floor(m * opts.sgd_ratio));
         for i=1:m
-            a = data(:,i);
+            a = data(i,:)';
             b = label(i);
             summand = (b*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
             summation = summation + summand;
         end
-        penalty = -1/m * summation;
+        penalty = -1/floor(m * opts.sgd_ratio) * summation;
     end
 end

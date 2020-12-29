@@ -42,10 +42,10 @@ function f = svm_sparse()
     end
 
     function penalty = penalty(x,y,opts)
-        global A b;
-        data = A; label = b;
+        global data1 label1;
+        data = data1; label = label1;
         penalty = 0;
-        m = size(A,1);
+        m = size(data1,1);
         for i=1:m
             ai = data(i,:)';
             bi = label(i);
@@ -54,9 +54,9 @@ function f = svm_sparse()
     end
 
     function penalty = dx_penalty(x,y,opts)
-        global A b;
-        data = A; label = b;
-        m = opts.sample.m;
+        global data1 label1;
+        data = data1; label = label1;
+        m = size(data1,1);
         penalty = 0;
         delta = opts.svm.delta;
         for i=1:m
@@ -74,9 +74,9 @@ function f = svm_sparse()
     end
 
     function penalty = dy_penalty(x,y,opts)
-        global A b;
-        data = A; label = b;
-        m = opts.sample.m;
+        global data1 label1;
+        data = data1; label = label1;
+        m = size(data1,1);
         penalty = 0;
         delta = opts.svm.delta;
         for i=1:m

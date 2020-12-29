@@ -13,13 +13,13 @@ function f = svm()
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     function fx = svm_obj(xy,opts)
-        x = xy(1:end-1,1); y = xy(end);
+        x = xy(1:end-1); y = xy(end);
         lambda = opts.svm.lambda;
         fx = lambda / 2 * norm(x)^2 + penalty(x,y,opts);
     end
 
     function g = svm_grad(xy,opts)
-        x = xy(1:end-1,1); y = xy(end);
+        x = xy(1:end-1); y = xy(end);
         lambda = opts.svm.lambda;
         gx = lambda * x + dx_penalty(x,y,opts);
         gy = dy_penalty(x,y,opts);
@@ -45,7 +45,7 @@ function f = svm()
         global data1 label1;
         data = data1; label = label1;
         penalty = 0;
-        m = 2;
+        m = opts.sample.m;
         for i=1:m
             a = data(:,i);
             b = label(i);
@@ -56,7 +56,7 @@ function f = svm()
     function penalty = dx_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = 2;
+        m = opts.sample.m;
         penalty = 0;
         delta = opts.svm.delta;
         for i=1:m
@@ -64,7 +64,7 @@ function f = svm()
             b = label(i);
             t = 1 - b * (a' * x + y);
             if t > 0 && t <= delta
-                penalty = penalty + 1/delta * (-1) * b * a;
+                penalty = penalty + 1/delta * (-1) * t * b * a;
             elseif t <= 0            
                 penalty = penalty + 0;
             else
@@ -76,7 +76,7 @@ function f = svm()
     function penalty = dy_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = 2;
+        m = opts.sample.m;
         penalty = 0;
         delta = opts.svm.delta;
         for i=1:m
@@ -84,7 +84,7 @@ function f = svm()
             b = label(i);
             t = 1 - b * (a' * x + y);
             if t > 0 && t <= delta
-                penalty = penalty + (-1) * 1/delta * b;
+                penalty = penalty + (-1) * 1/delta * b * t;
             elseif t <= 0
                 penalty = penalty + 0;
             else

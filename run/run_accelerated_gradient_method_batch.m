@@ -1,4 +1,4 @@
-function [x,k,ngs] = run_accelerated_gradient_method_batch(func, opts)
+function [x,k,ngs, train_accs, test_accs] = run_accelerated_gradient_method_batch(func, opts)
 
 % Add folder to path
 addpath(genpath('method'));
@@ -33,10 +33,15 @@ rand_index = randperm(opts.sample.m,opts.sample.m);
 batch_size = opts.bfgs.batch_size;batch_count = ceil(ori_m / batch_size);
 
 
-x = opts.x0;k = 0;ngs = [];
+x = opts.x0;k = 0;ngs = [];train_accs=[];test_accs=[];
 for i = 1:batch_count %do with the batch
-    data1 = data1_ori(:,rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
-    label1 = label1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
+    if issparse(data1) == 1
+        data1 = data1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)),:);
+        label1 = label1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
+    else
+        data1 = data1_ori(:,rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
+        label1 = label1_ori(rand_index((i-1) * batch_size + 1:min(i * batch_size,ori_m)));
+    end
     
     %renew the m as needs
     sizes = size(label1);
@@ -56,16 +61,20 @@ for i = 1:batch_count %do with the batch
         f = logr_sparse();
     elseif func == "logr_sgd"
         f = logr_sgd();
+    elseif func == "logr_sparse_sgd"
+        f = logr_sgd_sparse();
     end
     
     %use the former batch result for next train
     x0 = x;
-    [x,k_new,ngs_new] = agm_unknown(f,x0,opts);
-    %[x,k_new,ngs_new] = agm_known(f,x0,opts);
+    [x,k_new,ngs_new,train_accs_new, test_accs_new] = agm_unknown(f,x0,opts);
+    %[x,k_new,ngs_new,train_accs, test_accs] = agm_known(f,x0,opts);
 
     %store the res
     k = k + k_new;
     ngs = [ngs,ngs_new];
+    train_accs = [train_accs, train_accs_new];
+    test_accs = [test_accs, test_accs_new];
 end
 
 %finally use the whole dataset for final descent
@@ -77,12 +86,14 @@ opts.agm.tol = tol_ori;
 
 %use the former batch result for final train
 x0 = x;
-[x,k_new,ngs_new] = agm_unknown(f,x0,opts);
+[x,k_new,ngs_new,train_accs_new, test_accs_new] = agm_unknown(f,x0,opts);
 %[x,k_new,ngs_new] = agm_known(f,x0,opts);
 
 %store the res
 k = k + k_new;
 ngs = [ngs,ngs_new];
+train_accs = [train_accs, train_accs_new];
+test_accs = [test_accs, test_accs_new];
 %%%%%%%%%%%%%%%%%%%%%
 % Utility Functions %
 %%%%%%%%%%%%%%%%%%%%%

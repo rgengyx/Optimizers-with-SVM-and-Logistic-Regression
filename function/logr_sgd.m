@@ -14,13 +14,13 @@ function f = logr_sgd()
 
     function fx = logr_obj(xy, opts)
         x = xy(1:end-1,1); y = xy(end);
-        lambda = opts.svm.lambda;
+        lambda = opts.logr.lambda;
         fx = lambda / 2 * norm(x)^2 + penalty(x,y,opts);
     end
 
     function g = logr_grad(xy,opts)
         x = xy(1:end-1,1); y = xy(end);
-        lambda = opts.svm.lambda;
+        lambda = opts.logr.lambda;
         gx = lambda * x + dx_penalty(x,y,opts);
         gy = dy_penalty(x,y,opts);
         g = [gx;gy];

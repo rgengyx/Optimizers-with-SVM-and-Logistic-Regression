@@ -1,4 +1,4 @@
-function [x,k,ngs] = run_gradient_method(func, opts)
+function [x, k, ngs, train_accs, test_accs] = run_gradient_method(func, opts)
 
 % Add folder to path
 addpath(genpath('method'));
@@ -23,9 +23,11 @@ elseif func == "logr_sparse"
     f = logr_sparse();
 elseif func == "logr_sgd"
     f = logr_sgd();
+elseif func == "logr_sparse_sgd"
+    f = logr_sgd_sparse();
 end
 
 x0 = opts.x0;
-[x,k,ngs] = gradient_method(f,x0,opts);
+[x, k, ngs, train_accs, test_accs] = gradient_method(f,x0,opts);
 
 end
