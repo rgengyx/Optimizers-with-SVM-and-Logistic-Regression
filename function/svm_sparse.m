@@ -64,7 +64,7 @@ function f = svm_sparse()
             bi = label(i);
             t = 1 - bi * (ai' * x + y);
             if t > 0 && t <= delta
-                penalty = penalty + 1/delta * (-1) * bi * ai;
+                penalty = penalty + 1/delta * (-1) * t * bi * ai;
             elseif t <= 0            
                 penalty = penalty + 0;
             else
@@ -84,7 +84,7 @@ function f = svm_sparse()
             bi = label(i);
             t = 1 - bi * (ai' * x + y);
             if t > 0 && t <= delta
-                penalty = penalty + (-1) * 1/delta * bi;
+                penalty = penalty + (-1) * 1/delta * bi * t;
             elseif t <= 0
                 penalty = penalty + 0;
             else

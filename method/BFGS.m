@@ -46,11 +46,15 @@ while(count < opts.bfgs.maxit)
     H_now = H_next;
     count = count + 1;
 
+    if isnan(f.obj(x_now,opts))
+        break 
+    end
+    
     % test accuracy
     [CR_train,CR_test] = train_test_accuracy(x_now);
     train_accs(count) = CR_train;
     test_accs(count) = CR_test;
-    
+        
     if opts.bfgs.print
         obj_val   = f.obj(x_now,opts);
         ng = norm(df(x_now,opts));

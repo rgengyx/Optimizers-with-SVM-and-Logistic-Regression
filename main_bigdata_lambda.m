@@ -45,12 +45,13 @@ label1 = label1(rand_index(split_index+1:end));
 % gm_sgd
 % gm_sgd_batch
 
-method_cmp_list = {"bfgs"};
+method_cmp_list = {"lbfgs"};
+lambdas = {0.05, 0.1,0.2,0.5,0.8};
 
-x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
-for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
+for i = 1:length(lambdas)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr_sparse",method_cmp_list{i},opts);
+    opts.logr.lambda = lambdas{i};
+    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr_sparse",method_cmp_list{1},opts);
     toc
 end
 
@@ -75,15 +76,15 @@ for i = 1:length(ngs_list)
     plot(log(ngs_list{i}));
     hold on;
 end
-legend(method_cmp_list);
+legend({"0.05", "0.1", "0.2", "0.5", "0.8"});
 
 % Accuracy Plot
-for i = 1:length(method_cmp_list)
-    figure('Name','Train Test Accuracy' + method_cmp_list{i});
-    plot(train_accs_list{i});
-    hold on;
+figure('Name','Testing Accuracy');
+for i = 1:length(lambdas)
+%     plot(train_accs_list{i});
+%     hold on;
     plot(test_accs_list{i});
     hold on;
-    legend({"Training Accuracy", "Test Accuracy"});
 end
 
+legend({"0.05", "0.1", "0.2", "0.5", "0.8"});
