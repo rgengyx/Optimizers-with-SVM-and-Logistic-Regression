@@ -45,14 +45,15 @@ opts.sample.m = sizes(2);%the count of sample
 
 %initial point set
 opts.x0 = [0,2,0]';
-method_cmp_list = {"gm"};method_name_list = {};
+method_cmp_list = {"gm","agm","bfgs","lbfgs"};
+method_name_list = {};
 for i = 1:length(method_cmp_list)
     method_name_list{i} = strrep(method_cmp_list{i},"_"," ");
 end
-x_list = {};k_list = {};ngs_list = {};
+x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i}] = run("svm",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("svm",method_cmp_list{i},opts);
     toc
 end
 
@@ -85,15 +86,11 @@ end
 legend(method_name_list);
 
 % Accuracy Plot
-%{
-figure('Name','Train Test Accuracy');
-for i = 1:length(train_accs_list)
+for i = 1:length(method_cmp_list)
+    figure('Name','Train Test Accuracy:' + method_cmp_list{i});
     plot(train_accs_list{i});
     hold on;
-end
-for i = 1:length(test_accs_list)
     plot(test_accs_list{i});
     hold on;
+    legend({"Training Accuracy", "Test Accuracy"});
 end
-legend({"Training Accuracy", "Test Accuracy"});
-%}
