@@ -17,6 +17,8 @@ if func == "svm"
     f = svm();
 elseif func == "svm_sparse"
     f = svm_sparse();
+elseif func == "svm_sgd"
+    f = svm_sgd();
 elseif func == "logr"
     f = logr();
 elseif func == "logr_sparse"

@@ -15,8 +15,10 @@ addpath(genpath('run'));
 %%%%%%%%%%%%%
 global data1;global label1;global data2;global label2;
 
-load("small/small_dataset_sample.mat");
-
+%load("small/small_dataset_sample.mat");
+load("bigdata/mushrooms/mushrooms_train.mat")
+load("bigdata/mushrooms/mushrooms_train_label.mat")
+data1 = A';label1 = b';
 % Sample
 sizes = size(data1);
 opts.sample.m = sizes(2);%the count of sample
@@ -37,22 +39,31 @@ opts.sample.m = sizes(2);%the count of sample
 % Run %
 %%%%%%%
 
-% svm, logr
+% svm, logr (no more bigdata)
 % gm, agm, bfgs, lbfgs
 % gm_batch,agm_batch,bfgs_batch,lbfgs_batch
 % gm_sgd,agm_sgd, bfgs_sgd, lbfgs_sgd
 % gm_sgd_batch,agm_sgd_batch, bfgs_sgd_batch, lbfgs_sgd_batch
 
 %initial point set
-opts.x0 = [0,2,0]';
-method_cmp_list = {"gm"};method_name_list = {};
+opts.x0 = zeros(size(data1,1) + 1,1);
+method_cmp_list = {};method_name_list = {};
 for i = 1:length(method_cmp_list)
     method_name_list{i} = strrep(method_cmp_list{i},"_"," ");
 end
-x_list = {};k_list = {};ngs_list = {};
+x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
 for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i}] = run("svm",method_cmp_list{i},opts);
+    [x_list{i},k_list{i},ngs_list{i}] = run("logr",method_cmp_list{i},opts);
+    toc
+end
+
+lbfgs_lambda_list = [0.05,0.1,0.2,0.5,0.8];
+for i = 1:length(lbfgs_lambda_list)
+    tic
+    opts.logr.lambda = lbfgs_lambda_list(i);
+    %if big data please no more accuracy save!!
+    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr","lbfgs",opts);
     toc
 end
 
@@ -70,11 +81,13 @@ end
 % Visualize %
 %%%%%%%%%%%%%
 
+%{
 % Visualize
 figure('Name','Scatter Plot');
 for i = 1:length(x_list)
     visualize(x_list{i}, data2, label2);
 end
+%}
 
 % Convergence Plot
 figure('Name','Convergence Plot');
@@ -91,9 +104,11 @@ for i = 1:length(train_accs_list)
     plot(train_accs_list{i});
     hold on;
 end
+%}
 for i = 1:length(test_accs_list)
     plot(test_accs_list{i});
     hold on;
 end
-legend({"Training Accuracy", "Test Accuracy"});
-%}
+legend(string(lbfgs_lambda_list))
+%legend({"Training Accuracy", "Test Accuracy"});
+

@@ -48,13 +48,19 @@ for k = 1:opts.gm.maxit
 %     norms(k) = norm(x - [1;1]);
     
     % test accuracy
-    [CR_train,CR_test] = train_test_accuracy(x);
-    train_accs(k) = CR_train;
-    test_accs(k) = CR_test;
+    if opts.cr_save
+        [CR_train,CR_test] = train_test_accuracy(x);
+        train_accs(k) = CR_train;
+        test_accs(k) = CR_test;
+    end
     
     if opts.gm.print
         obj_val   = f.obj(x,opts);
-        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',k,obj_val,ng,alpha,CR_train, CR_test);
+        if opts.cr_save
+            fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',k,obj_val,ng,alpha,CR_train, CR_test);
+        else
+            fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',k,obj_val,ng,alpha);
+        end
     end
     
     if ng <= opts.gm.tol

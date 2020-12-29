@@ -35,9 +35,9 @@ function f = logr_sparse()
         data = data1; label = label1;
         penalty = 0;
         summation = 0;
-        m = size(data1,1);
+        m = size(data1,2);
         for i=1:m
-            a = data(i,:)';
+            a = data(:,i);
             b = label(i);
             t = 1 + exp(-b * (a' * x + y));
             summand = log(t);
@@ -49,11 +49,11 @@ function f = logr_sparse()
     function penalty = dx_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = size(data1,1);
+        m = size(data1,2);
         penalty = 0;
         summation = 0;
         for i=1:m
-            a = data(i,:)';
+            a = data(:,i);
             b = label(i);
             summand = (b*a*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
             summation = summation + summand;
@@ -64,11 +64,11 @@ function f = logr_sparse()
     function penalty = dy_penalty(x,y,opts)
         global data1 label1;
         data = data1; label = label1;
-        m = size(data1,1);
+        m = size(data1,2);
         penalty = 0;
         summation = 0;
         for i=1:m
-            a = data(i,:)';
+            a = data(:,i);
             b = label(i);
             summand = (b*exp(-b * (a' * x + y))) / (1+exp(-b * (a' * x + y)));
             summation = summation + summand;

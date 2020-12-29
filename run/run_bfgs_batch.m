@@ -49,6 +49,8 @@ for i = 1:batch_count %do with the batch
         f = svm();
     elseif func == "svm_sparse"
         f = svm_sparse();
+    elseif func == "svm_sgd"
+        f = svm_sgd();
     elseif func == "logr"
         f = logr();
     elseif func == "logr_sparse"

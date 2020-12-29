@@ -71,17 +71,22 @@ while(count < opts.lbfgs.maxit && norm(f.grad(x_now,opts)) > opts.lbfgs.epsilon)
     if isnan(f.obj(x_now,opts))
        break 
     end
-    
+    k = count;
     % test accuracy
-    [CR_train,CR_test] = train_test_accuracy(x_now);
-    train_accs(count) = CR_train;
-    test_accs(count) = CR_test;
+    if opts.cr_save
+        [CR_train,CR_test] = train_test_accuracy(x);
+        train_accs(k) = CR_train;
+        test_accs(k) = CR_test;
+    end
     
     if opts.lbfgs.print
         obj_val   = f.obj(x_now,opts);
         ng = norm(q);
-        
-        fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',count,obj_val,ng,alpha,CR_train, CR_test);
+        if opts.cr_save
+            fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f ; train_acc=%1.4f ; test_acc=%1.4f\n',k,obj_val,ng,alpha,CR_train, CR_test);
+        else
+            fprintf('k=[%5i] ; obj_val=%1.6f ; ng=%1.4e ; alpha=%1.2f\n',k,obj_val,ng,alpha);
+        end
     end
     
 end

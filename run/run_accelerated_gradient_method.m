@@ -22,6 +22,8 @@ opts.agm.step_size = step_size(opts);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if func == "svm"
     f = svm();
+elseif func == "svm_sgd"
+    f = svm_sgd();
 elseif func == "svm_sparse"
     f = svm_sparse();
 elseif func == "logr"

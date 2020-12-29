@@ -4,8 +4,11 @@ function opts = config(opts)
 % Method Parameters %
 %%%%%%%%%%%%%%%%%%%%%
 
+%if with big data, not save accuracy to speed up
+opts.cr_save = false
+
 %sgd ratio
-opts.sgd_ratio = 1 / 1; %set 1 if no sgd, else less than 1 for initial batch sgd
+opts.sgd_ratio = 1 / 1.5; %set 1 if no sgd, else less than 1 for initial batch sgd
 
 % GM
 opts.gm.maxit = 500;
@@ -20,7 +23,7 @@ opts.gm.sgd_epsilon = 1e-2;
 
 % AGM
 opts.agm.maxit = 3000;
-opts.agm.tol = 1e-6
+opts.agm.tol = 1e-6;
 opts.gm.display = true;
 opts.gm.plot = false;
 opts.agm.print = true;
@@ -33,7 +36,7 @@ opts.agm.sgd_epsilon = 5 * 1e-3;
 opts.bfgs.epsilon = 1e-6;
 opts.bfgs.H_epsilon = 1e-14;
 opts.bfgs.rou = 1;
-opts.bfgs.maxit = 1000;
+opts.bfgs.maxit = 400;
 opts.bfgs.batch_size = 200;
 opts.bfgs.batch_epsilon = 1e-2;
 opts.bfgs.print = true;
