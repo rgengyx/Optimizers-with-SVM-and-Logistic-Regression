@@ -48,6 +48,7 @@ opts.sample.m = sizes(2);%the count of sample
 %initial point set
 opts.x0 = zeros(size(data1,1) + 1,1);
 method_cmp_list = {};method_name_list = {};
+
 for i = 1:length(method_cmp_list)
     method_name_list{i} = strrep(method_cmp_list{i},"_"," ");
 end
@@ -99,8 +100,8 @@ legend(method_name_list);
 
 % Accuracy Plot
 %{
-figure('Name','Train Test Accuracy');
-for i = 1:length(train_accs_list)
+for i = 1:length(method_cmp_list)
+    figure('Name','Train Test Accuracy:' + method_cmp_list{i});
     plot(train_accs_list{i});
     hold on;
 end
@@ -108,6 +109,7 @@ end
 for i = 1:length(test_accs_list)
     plot(test_accs_list{i});
     hold on;
+    legend({"Training Accuracy", "Test Accuracy"});
 end
 legend(string(lbfgs_lambda_list))
 %legend({"Training Accuracy", "Test Accuracy"});

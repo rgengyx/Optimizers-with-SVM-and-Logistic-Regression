@@ -5,7 +5,7 @@ function opts = config(opts)
 %%%%%%%%%%%%%%%%%%%%%
 
 %if with big data, not save accuracy to speed up
-opts.cr_save = false
+opts.cr_save = false;
 
 %sgd ratio
 opts.sgd_ratio = 1 / 1.5; %set 1 if no sgd, else less than 1 for initial batch sgd

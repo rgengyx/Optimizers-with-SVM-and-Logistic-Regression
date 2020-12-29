@@ -52,6 +52,10 @@ while(count < opts.bfgs.maxit)
         train_accs(k) = CR_train;
         test_accs(k) = CR_test;
     end
+
+    if isnan(f.obj(x_now,opts))
+        break 
+    end
     
     if opts.bfgs.print
         obj_val   = f.obj(x_now,opts);

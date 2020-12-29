@@ -45,12 +45,14 @@ label1 = label1(rand_index(split_index+1:end));
 % gm_sgd
 % gm_sgd_batch
 
-method_cmp_list = {"bfgs"};
-
-x_list = {};k_list = {};ngs_list = {};train_accs_list = {};test_accs_list = {};
-for i = 1:length(method_cmp_list)%use tic toc here to measure the time consume
+method_cmp_list = {"lbfgs"};
+deltas = {1e-4,1e-3,1e-2,1e-1};
+% deltas = {1e-4};
+    
+for i = 1:length(deltas)%use tic toc here to measure the time consume
     tic
-    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("logr_sparse",method_cmp_list{i},opts);
+    opts.logr.delta = deltas{i};
+    [x_list{i},k_list{i},ngs_list{i},train_accs_list{i},test_accs_list{i}] = run("svm_sparse",method_cmp_list{1},opts);
     toc
 end
 
@@ -75,15 +77,15 @@ for i = 1:length(ngs_list)
     plot(log(ngs_list{i}));
     hold on;
 end
-legend(method_cmp_list);
+legend({"1e-4","1e-3","1e-2","1e-1"});
 
 % Accuracy Plot
-for i = 1:length(method_cmp_list)
-    figure('Name','Train Test Accuracy' + method_cmp_list{i});
-    plot(train_accs_list{i});
-    hold on;
+figure('Name','Testing Accuracy');
+for i = 1:length(deltas)
+%     plot(train_accs_list{i});
+%     hold on;
     plot(test_accs_list{i});
     hold on;
-    legend({"Training Accuracy", "Test Accuracy"});
 end
 
+legend({"1e-4","1e-3","1e-2","1e-1"});
